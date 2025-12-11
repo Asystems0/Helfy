@@ -1,0 +1,14 @@
+{
+  "name": "helfy-consumer",
+  "version": "1.0.0",
+  "description": "Kafka consumer for Helfy",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "kafkajs": "^2.2.4",
+    "prom-client": "^15.1.0",
+    "express": "^4.18.2"
+  }
+}

@@ -1,0 +1,23 @@
+# Dependencies
+node_modules/
+npm-debug.log
+
+# Runtime Data & Logs
+data/
+logs/
+
+# Environment Variables
+.env
+
+# OS Files
+.DS_Store
+Thumbs.db
+
+# IDE Files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Temporary Files
+docker-compose copy.yml
