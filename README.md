@@ -14,7 +14,7 @@ Get the application running in minutes.
 
 1.  **Clone the repository** (if you haven't already):
     ```bash
-    git clone <your-repo-url>
+    git clone https://github.com/Asystems0/Helfy
     cd Helfy
     ```
 
@@ -35,6 +35,29 @@ Get the application running in minutes.
 ## 🏗 Architecture
 
 The system is composed of the following microservices:
+
+```mermaid
+flowchart LR
+    User((User)) -- SQL --> TiDB
+    subgraph "TiDB Cluster"
+        TiDB[TiDB Server] -- KV --> TiKV[TiKV Storage]
+        TiKV -- Changes --> TiCDC[TiCDC]
+    end
+    
+    TiCDC -- Canal-JSON --> Kafka{Kafka}
+    
+    subgraph "Processing"
+        Kafka -- Subscribe --> Consumer[Node.js Consumer]
+    end
+    
+    subgraph "Observability"
+        Consumer -- Logs --> Filebeat
+        Filebeat -- Ship --> Elasticsearch
+        Consumer -- Scrape --> Prometheus
+        Elasticsearch --> Grafana[Grafana Dashboard]
+        Prometheus --> Grafana
+    end
+```
 
 ### 1. Database Layer (TiDB Cluster)
 -   **`pd0` (Placement Driver)**: The cluster manager and metadata store.
