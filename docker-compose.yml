@@ -72,7 +72,10 @@ services:
       - ./config/init.sql:/config/init.sql
     entrypoint: ["bash", "-c", "echo 'Waiting for TiDB...' && until mysql -h tidb0 -P 4000 -u root -e 'SELECT 1'; do sleep 2; done && echo 'TiDB is ready! Running init script...' && mysql -h tidb0 -P 4000 -u root < /config/init.sql && echo 'Initialization complete.'"]
     depends_on:
+      - pd0
+      - tikv0
       - tidb0
+    restart: "no"
     networks:
       - helfy-net
 
@@ -133,7 +136,9 @@ services:
     entrypoint: ["/bin/sh", "/create_changefeed.sh"]
     depends_on:
       - ticdc
+      - tidb-init
       - kafka
+    restart: "no"
     networks:
       - helfy-net
 

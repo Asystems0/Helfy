@@ -111,6 +111,16 @@ flowchart LR
     ```
 3.  Watch the consumer logs! You will see the `INSERT` event appear almost instantly.
 
+
+### Verify Data via CLI
+You can inspect the database directly using the `tidb-init` container:
+```bash
+docker-compose run --rm \
+  --entrypoint "mysql" \
+  tidb-init \
+  -h tidb0 -P 4000 -u root -e "SELECT * FROM helfy_db.users WHERE username='demo_user';"
+```
+
 ## 📂 Project Structure
 
 ```
